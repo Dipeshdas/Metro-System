@@ -1,4 +1,5 @@
 package Codeforces;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,6 +37,8 @@ class Verteices{
 
 
     public void addEdge(String u, String v, int dist){
+        //0.Sealdah
+        //1.Dumdum
         int firstNode=Integer.parseInt(u.substring(0,u.indexOf('.')));
         int secondNode=Integer.parseInt(v.substring(0,v.indexOf('.')));
         map.put(u.substring(u.indexOf('.')+1),firstNode);
@@ -114,6 +117,9 @@ class Verteices{
     }
 
     public int getShortestDist(String u,String v){
+        if(map.get(u)==null || map.get(v)==null){
+            return -1;
+        }
         int dist[]=dijkstra(totalVertex,adjaCentList,map.get(u));
         if(dist[map.get(v)]!=(int)1e9) return dist[map.get(v)];
         return 0;
@@ -188,12 +194,16 @@ class Verteices{
     }
 
     public void getShortestPath(String u,String v){
+        if(map.get(u)==null || map.get(v)==null){
+            System.out.println("Sorry !! THERE IS NO METRO AVAILABLE FOR GIVEN SOURCE AND DEST");
+            return ;
+        }
         ArrayList<Integer>path=printShortestPath(totalVertex,adjaCentList,map.get(u),map.get(v));
         printPaths(path);
     }
 
     private void printPaths(ArrayList<Integer>path){
-        if(path.size()==1) System.out.println("path doest not exit");
+        if(path.contains(-1)) System.out.println("path doest not exit");
         else {
             String ans = "";
 
@@ -242,6 +252,7 @@ public class SPF {
         g.addEdge("11.TITUMIR", "12.NEW BARRACKPORE", 8);
         g.addEdge("1.DUMDUM", "13.BIRATI", 4);
         g.addEdge("13.BIRATI", "12.NEW BARRACKPORE", 3);
+
         g.createGraph();
 
         System.out.println("\n\t\t\t****WELCOME TO THE KOLKATA METRO APP*****");
@@ -277,7 +288,12 @@ public class SPF {
                     System.out.println("ENTER THE NAME OF DESTINATION STATION: ");
                     String v = (inp.readLine()).toUpperCase();
                     System.out.println();
-                    System.out.println("Shortest distance between "+u+" and "+v + " is :"+g.getShortestDist(u, v) + "k.M");
+                    if(g.getShortestDist(u, v)==-1){
+                        System.out.println("Sorry !! THERE IS NO METRO AVAILABLE FOR GIVEN SOURCE AND DEST");
+                    }
+                    else {
+                        System.out.println("Shortest distance between " + u + " and " + v + " is :" +g.getShortestDist(u, v) +"k.M");
+                    }
 
                     break;
 
